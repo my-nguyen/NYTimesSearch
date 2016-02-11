@@ -30,7 +30,14 @@ public class Date implements Serializable {
       builder.append(month+1).append("/").append(day).append("/").append(year);
       return builder.toString();
    }
-   
+
+   public String getString() {
+      StringBuilder builder = new StringBuilder();
+      String formattedMonth = String.format("%02d", (month+1));
+      builder.append(year).append(formattedMonth).append(day);
+      return builder.toString();
+   }
+
    private void initialize(int an, int mois, int jour) {
       year = an;
       month = mois;

@@ -3,17 +3,12 @@ package com.nguyen.nytimessearch;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * Created by My on 11/10/2015.
@@ -46,6 +41,8 @@ public class DatePickerFragment extends DialogFragment {
       final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
       // extract the Calendar object stashed in via newInstance()
       Date date = (Date)getArguments().getSerializable("DAY_IN");
+      if (date == null)
+         date = new Date();
       // initialize the DatePicker dialog with the date values in year, month and day
       datePicker.init(date.year, date.month, date.day, null);
 

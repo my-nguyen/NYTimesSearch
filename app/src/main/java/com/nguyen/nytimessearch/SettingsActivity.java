@@ -14,8 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import java.util.Calendar;
-
 /**
  * Created by My on 2/10/2016.
  */
@@ -41,7 +39,8 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerFra
       // set up "Begin Date"
       beginDate = (EditText)findViewById(R.id.begin_date_edit_text);
       // display the current date in the EditText
-      beginDate.setText(settings.beginDate.toString());
+      if (settings.beginDate != null)
+         beginDate.setText(settings.beginDate.toString());
       // set up DatePicker dialog
       beginDate.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -62,14 +61,14 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerFra
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       // apply the adapter to the spinner
       sortOrder.setAdapter(adapter);
+      Log.i("NGUYEN", "at spinner, settings: " + settings);
       // set the Spinner to the pre-selected Sort Order
       sortOrder.setSelection(adapter.getPosition(settings.sortOrder));
       sortOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
          @Override
          public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            settings.sortOrder = parent.getItemAtPosition(position).toString();
+            settings.sortOrder = position == 0 ? null : parent.getItemAtPosition(position).toString();
          }
-
          @Override
          public void onNothingSelected(AdapterView<?> parent) {
          }
@@ -123,15 +122,5 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerFra
       // update the EditText to reflect the new Date
       beginDate.setText(date.toString());
       Log.i("NGUYEN", "SettingsActivity received Date from DatePickerFragment: " + settings.beginDate);
-   }
-
-   private String formatDate(Calendar date) {
-      StringBuilder builder = new StringBuilder();
-      builder.append(date.get(Calendar.MONTH) + 1)
-            .append("/")
-            .append(date.get(Calendar.DAY_OF_MONTH))
-            .append("/")
-            .append(date.get(Calendar.YEAR));
-      return builder.toString();
    }
 }
