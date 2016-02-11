@@ -23,7 +23,7 @@ public class DatePickerFragment extends DialogFragment {
 
    // this interface is used to pass data (Calendar) from DatePickerFragment to SettingsActivity
    public interface DateSaver {
-      public void save(Calendar date);
+      public void save(Date date);
    }
 
    @Override
@@ -45,9 +45,9 @@ public class DatePickerFragment extends DialogFragment {
       View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_date_picker, null);
       final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
       // extract the Calendar object stashed in via newInstance()
-      Calendar calendar = (Calendar)getArguments().getSerializable("DAY_IN");
+      Date date = (Date)getArguments().getSerializable("DAY_IN");
       // initialize the DatePicker dialog with the date values in year, month and day
-      datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
+      datePicker.init(date.year, date.month, date.day, null);
 
       // create and return AlertDialog
       return new AlertDialog.Builder(getActivity())
@@ -62,7 +62,7 @@ public class DatePickerFragment extends DialogFragment {
                // and call the SettingsActivity callback save() to pass the Date back to that
                // Activity and also update the Date EditText in that Activity
                public void onClick(DialogInterface dialog, int which) {
-                  Calendar date = new GregorianCalendar(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+                  Date date = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
                   dateSaver.save(date);
                }
             })
@@ -71,7 +71,7 @@ public class DatePickerFragment extends DialogFragment {
 
    // this convenient method is called by beginDate.onClick() in SettingsActivity. it creates a new
    // DatePickerFragment object and stashes the current Date object in that DatePickerFragment
-   public static DatePickerFragment newInstance(Calendar date)
+   public static DatePickerFragment newInstance(Date date)
    {
       DatePickerFragment fragment = new DatePickerFragment();
       Bundle bundle = new Bundle();

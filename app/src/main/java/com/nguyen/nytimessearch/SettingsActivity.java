@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerFra
       // set up "Begin Date"
       beginDate = (EditText)findViewById(R.id.begin_date_edit_text);
       // display the current date in the EditText
-      beginDate.setText(formatDate(settings.beginDate));
+      beginDate.setText(settings.beginDate.toString());
       // set up DatePicker dialog
       beginDate.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -117,12 +117,12 @@ public class SettingsActivity extends AppCompatActivity implements DatePickerFra
 
    @Override
    // this method is used to pass data from DatePickerFragment to this Activity
-   public void save(Calendar date) {
+   public void save(Date date) {
       // save the data being passed from DatePickerFragment
       settings.beginDate = date;
       // update the EditText to reflect the new Date
-      beginDate.setText(formatDate(date));
-      Log.i("NGUYEN", "SettingsActivity received Date from DatePickerFragment: " + formatDate(settings.beginDate));
+      beginDate.setText(date.toString());
+      Log.i("NGUYEN", "SettingsActivity received Date from DatePickerFragment: " + settings.beginDate);
    }
 
    private String formatDate(Calendar date) {
