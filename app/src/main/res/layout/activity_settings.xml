@@ -37,7 +37,6 @@
             android:id="@+id/sort_order_spinner"
             android:layout_weight="2"
             android:entries="@array/sort_order_array"
-            android:prompt="@string/sort_order_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
