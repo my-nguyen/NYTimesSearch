@@ -3,6 +3,7 @@ package com.nguyen.nytimessearch;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -14,32 +15,13 @@ import android.widget.DatePicker;
  * Created by My on 11/10/2015.
  */
 public class DatePickerFragment extends DialogFragment {
-   private DateSaver dateSaver;
-
-   // this interface is used to pass data (Calendar) from DatePickerFragment to SettingsActivity
-   public interface DateSaver {
-      public void save(Date date);
-   }
-
-   @Override
-   public void onAttach(Activity activity) {
-      super.onAttach(activity);
-      dateSaver = (DateSaver)activity;
-   }
-
-   @Override
-   public void onDetach() {
-      super.onDetach();
-      dateSaver = null;
-   }
-
    @Override
    public Dialog onCreateDialog(Bundle bundle)
    {
       // use the DatePicker layout
       View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_date_picker, null);
       final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
-      // extract the Calendar object stashed in via newInstance()
+      // extract the Date object passed in via newInstance()
       Date date = (Date)getArguments().getSerializable("DAY_IN");
       if (date == null)
          date = new Date();
@@ -60,7 +42,14 @@ public class DatePickerFragment extends DialogFragment {
                // Activity and also update the Date EditText in that Activity
                public void onClick(DialogInterface dialog, int which) {
                   Date date = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                  dateSaver.save(date);
+                  // pass the selected Date object out to the target fragment (SettingsFragment)
+                  if (getTargetFragment() != null) {
+                     // create an Intent to stuff a Date object in it
+                     Intent intent = new Intent();
+                     intent.putExtra("DAY_OUT", date);
+                     // pass the selected Date object back to the calling fragment (SettingsFragment)
+                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                  }
                }
             })
             .create();
@@ -71,6 +60,7 @@ public class DatePickerFragment extends DialogFragment {
    public static DatePickerFragment newInstance(Date date)
    {
       DatePickerFragment fragment = new DatePickerFragment();
+      // pass a Date object into DatePickerFragment
       Bundle bundle = new Bundle();
       bundle.putSerializable("DAY_IN", date);
       fragment.setArguments(bundle);
