@@ -36,7 +36,7 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
       visibleThreshold = visibleThreshold * layoutManager.getSpanCount();
    }
 
-   public int getLastVisibleItem(int[] lastVisibleItemPositions) {
+   public int getLastVisibleItem2(int[] lastVisibleItemPositions) {
       int maxSize = 0;
       for (int i = 0; i < lastVisibleItemPositions.length; i++) {
          if (i == 0) {
@@ -46,6 +46,14 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
             maxSize = lastVisibleItemPositions[i];
          }
       }
+      return maxSize;
+   }
+
+   public int getLastVisibleItem(int[] lastVisibleItemPositions) {
+      int maxSize = lastVisibleItemPositions[0];
+      for (int i = 1; i < lastVisibleItemPositions.length; i++)
+         if (lastVisibleItemPositions[i] > maxSize)
+            maxSize = lastVisibleItemPositions[i];
       return maxSize;
    }
 

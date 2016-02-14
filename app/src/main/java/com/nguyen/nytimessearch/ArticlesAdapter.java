@@ -23,6 +23,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
    // within the item layout for fast access
    public static class ViewHolder extends RecyclerView.ViewHolder {
       // your holder should contain a member variable for any view that will be set as you render a row
+      // public DynamicHeightImageView  mImage;
       public ImageView  mImage;
       public TextView   mTitle;
 
@@ -34,6 +35,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
          super(itemView);
          mTitle = (TextView)itemView.findViewById(R.id.title);
          mImage = (ImageView)itemView.findViewById(R.id.image);
+         // mImage = (DynamicHeightImageView)itemView.findViewById(R.id.image);
       }
    }
 
@@ -62,14 +64,15 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
    public void onBindViewHolder(ViewHolder holder, int position) {
       // get the data model based on position
       Article article = mArticles.get(position);
-      // populate the thumbnail image: remote download the image in the background
-      ImageView image = holder.mImage;
+      // populate the thumbnail image by remote downloading the image in the background
       String thumbnail = article.getThumbNail();
-      if (!TextUtils.isEmpty(thumbnail))
-         Picasso.with(mContext).load(thumbnail).into(image);
+      if (!TextUtils.isEmpty(thumbnail)) {
+         // set the height ratio before loading an image into Picasso
+         // holder.mImage.setHeightRatio(((double)holder.mImage.getHeight())/holder.mImage.getWidth());
+         Picasso.with(mContext).load(thumbnail).into(holder.mImage);
+      }
       // set article's title
-      TextView title = holder.mTitle;
-      title.setText(article.getHeadline());;
+      holder.mTitle.setText(article.getHeadline());;
    }
 
    // return the total count of items
