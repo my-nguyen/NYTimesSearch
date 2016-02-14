@@ -1,6 +1,7 @@
 package com.nguyen.nytimessearch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,21 +22,36 @@ import java.util.List;
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHolder> {
    // provide a direct reference to each of the views within a data item used to cache the views
    // within the item layout for fast access
-   public static class ViewHolder extends RecyclerView.ViewHolder {
+   public class ViewHolder extends RecyclerView.ViewHolder {
       // your holder should contain a member variable for any view that will be set as you render a row
       // public DynamicHeightImageView  mImage;
       public ImageView  mImage;
       public TextView   mTitle;
+      private Context   mContext;
 
       // we also create a constructor that accepts the entire item row and does the view lookups to
       // find each subview
-      public ViewHolder(View itemView) {
+      public ViewHolder(final Context context, View itemView) {
          // stores the itemView in a public final member variable that can be used to access the
          // context from any ViewHolder instance.
          super(itemView);
          mTitle = (TextView)itemView.findViewById(R.id.title);
          mImage = (ImageView)itemView.findViewById(R.id.image);
          // mImage = (DynamicHeightImageView)itemView.findViewById(R.id.image);
+         // attach a click listener to the entire row view
+         itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // create an intent to display the article
+               Intent intent = new Intent(context, ArticleActivity.class);
+               // get the article to display
+               Article article = mArticles.get(getLayoutPosition());
+               // pass that article into intent
+               intent.putExtra("article", article);
+               // launch the activity
+               context.startActivity(intent);
+            }
+         });
       }
    }
 
@@ -56,7 +72,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
       // inflate the custom layout
       View contactView = inflater.inflate(R.layout.item_article, parent, false);
       // return a new holder instance
-      return new ViewHolder(contactView);
+      return new ViewHolder(parent.getContext(), contactView);
    }
 
    // involves populating data into the item through holder
