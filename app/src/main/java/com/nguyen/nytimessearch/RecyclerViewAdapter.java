@@ -1,10 +1,14 @@
 package com.nguyen.nytimessearch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -13,14 +17,13 @@ import java.util.List;
 /**
  * Created by My on 2/14/2016.
  */
-public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-   // The items to display in your RecyclerView
-   private List<Article> mArticles;
-
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+   private List<Article>   mArticles;
+   private Context         mContext;
    private final int TITLE = 0, IMAGE = 1;
 
    // Provide a suitable constructor (depends on the kind of dataset)
-   public ComplexRecyclerViewAdapter(List<Article> items) {
+   public RecyclerViewAdapter(List<Article> items) {
       mArticles = items;
    }
 
@@ -39,8 +42,6 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
          return IMAGE;
    }
 
-   // for use in loading a thumbnail picture with Picasso in configureViewHolder2()
-   Context  mContext;
    /**
     * This method creates different RecyclerView.ViewHolder objects based on the item view type.\
     *
@@ -78,5 +79,48 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
          Picasso.with(mContext).load(article.thumbNail).into(vh2.mImage);
          vh2.mTitle.setText(article.headline);
       }
+   }
+
+   private class ViewHolder1 extends RecyclerView.ViewHolder {
+      public TextView mTitle;
+
+      public ViewHolder1(View view) {
+         super(view);
+         mTitle = (TextView)view.findViewById(R.id.title);
+         view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startArticleActivity(getLayoutPosition());
+            }
+         });
+      }
+   }
+
+   private class ViewHolder2 extends RecyclerView.ViewHolder {
+      public ImageView mImage;
+      public TextView  mTitle;
+
+      public ViewHolder2(View view) {
+         super(view);
+         mImage = (ImageView)view.findViewById(R.id.image);
+         mTitle = (TextView)view.findViewById(R.id.title);
+         view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               startArticleActivity(getLayoutPosition());
+            }
+         });
+      }
+   }
+
+   private void startArticleActivity(int position) {
+      // create an intent to display the article
+      Intent intent = new Intent(mContext, ArticleActivity.class);
+      // get the article to display
+      Article article = mArticles.get(position);
+      // pass that article into intent
+      intent.putExtra("article", article);
+      // launch the activity
+      mContext.startActivity(intent);
    }
 }

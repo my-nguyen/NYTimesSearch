@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
    @Bind(R.id.query)                   EditText       mQueryView;
    @Bind(R.id.search)                  Button         mSearchButton;
    @Bind(R.id.results_recycler_view)   RecyclerView   mResultsView;
-   Settings                   mSettings;
-   // ArticlesAdapter      mAdapter;
-   ComplexRecyclerViewAdapter mAdapter;
-   List<Article>              mArticles;
-   String                     mQueryString;
+   Settings             mSettings;
+   // ArticlesAdapter   mAdapter;
+   RecyclerViewAdapter  mAdapter;
+   List<Article>        mArticles;
+   String               mQueryString;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
                // create adapter passing in the sample user data
                mArticles.addAll(Article.fromJsonArray(articleJsonResults));
                // mAdapter = new ArticlesAdapter(mArticles);
-               mAdapter = new ComplexRecyclerViewAdapter(mArticles);
+               mAdapter = new RecyclerViewAdapter(mArticles);
                // attach the adapter to the recyclerview to populate items
                mResultsView.setAdapter(mAdapter);
             } catch (JSONException e) {
