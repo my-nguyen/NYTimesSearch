@@ -1,5 +1,7 @@
 package com.nguyen.nytimessearch;
 
+import org.parceler.Parcel;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -10,7 +12,8 @@ import java.util.GregorianCalendar;
 // this class represents a Date object, which is composed of year, month, and day. this class is a
 // replacement for Java.util.Calendar which contains a lot more fields and is therefore wasteful in
 // data sending between Activities and Fragments.
-public class Date implements Serializable {
+@Parcel
+public class Date {
    int year;
    int month;
    int day;

@@ -1,5 +1,7 @@
 package com.nguyen.nytimessearch;
 
+import org.parceler.Parcel;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,12 +9,16 @@ import java.util.List;
 /**
  * Created by My on 2/10/2016.
  */
-public class Settings implements Serializable {
+@Parcel
+public class Settings {
    Date     beginDate = null;
    String   sortOrder = null;
    boolean  arts = false;
    boolean  fashionStyle = false;
    boolean  sports = false;
+
+   public Settings() {
+   }
 
    public String getBeginDate() {
       return beginDate == null ? null : beginDate.getString();

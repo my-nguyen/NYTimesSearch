@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
+import org.parceler.Parcels;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -52,7 +54,7 @@ public class DatePickerFragment extends DialogFragment {
                   if (getTargetFragment() != null) {
                      // create an Intent to stuff a Date object in it
                      Intent intent = new Intent();
-                     intent.putExtra("DAY_OUT", date);
+                     intent.putExtra("DAY_OUT", Parcels.wrap(date));
                      // pass the selected Date object back to the calling fragment (SettingsFragment)
                      getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                   }
@@ -68,7 +70,7 @@ public class DatePickerFragment extends DialogFragment {
       DatePickerFragment fragment = new DatePickerFragment();
       // pass a Date object into DatePickerFragment
       Bundle bundle = new Bundle();
-      bundle.putSerializable("DAY_IN", date);
+      bundle.putParcelable("DAY_IN", Parcels.wrap(date));
       fragment.setArguments(bundle);
       return fragment;
    }

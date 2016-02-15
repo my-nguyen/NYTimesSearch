@@ -18,6 +18,8 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import org.parceler.Parcels;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -59,7 +61,7 @@ public class SettingsFragment extends DialogFragment {
    public static SettingsFragment newInstance(Settings settings) {
       SettingsFragment fragment = new SettingsFragment();
       Bundle args = new Bundle();
-      args.putSerializable("SETTINGS_IN", settings);
+      args.putParcelable("SETTINGS_IN", Parcels.wrap(settings));
       fragment.setArguments(args);
       return fragment;
    }
@@ -83,7 +85,7 @@ public class SettingsFragment extends DialogFragment {
       super.onViewCreated(view, savedInstanceState);
 
       // extract the Settings object passed in via NewInstance()
-      mSettings = (Settings)getArguments().getSerializable("SETTINGS_IN");
+      mSettings = (Settings)Parcels.unwrap(getArguments().getParcelable("SETTINGS_IN"));
       Log.i("NGUYEN", "SettingsActivity received Settings from MainActivity: " + mSettings);
 
       // set up "Begin Date"
@@ -162,7 +164,7 @@ public class SettingsFragment extends DialogFragment {
          public void onClick(View v) {
             // package up a Settings object to send back to the parent, MainActivity
             Intent data = new Intent();
-            data.putExtra("SETTINGS_OUT", mSettings);
+            data.putExtra("SETTINGS_OUT", Parcels.wrap(mSettings));
             dismiss();
          }
       });
@@ -172,7 +174,7 @@ public class SettingsFragment extends DialogFragment {
    // this method receives a Date object passed back from DatePickerFragment
    public void onActivityResult(int requestCode, int resultCode, Intent data) {
       if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_DATE) {
-         Date date = (Date)data.getSerializableExtra("DAY_OUT");
+         Date date = (Date)Parcels.unwrap(data.getParcelableExtra("DAY_OUT"));
          mBeginDate.setText(date.toString());
          mSettings.beginDate = date;
       }
