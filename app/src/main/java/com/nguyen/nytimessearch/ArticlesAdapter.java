@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
       if (!TextUtils.isEmpty(thumbnail)) {
          // set the height ratio before loading an image into Picasso
          // holder.mImage.setHeightRatio(((double)holder.mImage.getHeight())/holder.mImage.getWidth());
-         Picasso.with(mContext).load(thumbnail).into(holder.mImage);
+         Glide.with(mContext).load(thumbnail).into(holder.mImage);
       }
       // Log.d("NGUYEN", "onBindViewHolder(), thumbnail: " + article.getThumbNail() + ", title: " + article.getHeadline());
       // set article's title

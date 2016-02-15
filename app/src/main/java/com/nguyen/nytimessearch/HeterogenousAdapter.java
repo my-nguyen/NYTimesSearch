@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -76,7 +76,7 @@ public class HeterogenousAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       }
       else {
          ViewHolder2 vh2 = (ViewHolder2) viewHolder;
-         Picasso.with(mContext).load(article.thumbNail).into(vh2.mImage);
+         Glide.with(mContext).load(article.thumbNail).into(vh2.mImage);
          vh2.mTitle.setText(article.headline);
       }
    }
