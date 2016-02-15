@@ -20,7 +20,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
    private List<Article>   mArticles;
    private Context         mContext;
-   private final int TITLE = 0, IMAGE = 1;
+   private final int TITLE_ONLY = 0, TITLE_IMAGE = 1;
 
    // Provide a suitable constructor (depends on the kind of dataset)
    public RecyclerViewAdapter(List<Article> items) {
@@ -37,9 +37,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
    public int getItemViewType(int position) {
       Article article = mArticles.get(position);
       if (TextUtils.isEmpty(article.getThumbNail()))
-         return TITLE;
+         return TITLE_ONLY;
       else
-         return IMAGE;
+         return TITLE_IMAGE;
    }
 
    /**
@@ -53,7 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
       mContext = viewGroup.getContext();
       LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-      return viewType == TITLE ?
+      return viewType == TITLE_ONLY ?
          new ViewHolder1(inflater.inflate(R.layout.viewholder1, viewGroup, false)) :
          new ViewHolder2(inflater.inflate(R.layout.viewholder2, viewGroup, false));
    }
@@ -70,7 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
       Article article = (Article) mArticles.get(position);
       int viewType = viewHolder.getItemViewType();
-      if (viewType == TITLE) {
+      if (viewType == TITLE_ONLY) {
          ViewHolder1 vh1 = (ViewHolder1) viewHolder;
          vh1.mTitle.setText(article.headline);
       }
