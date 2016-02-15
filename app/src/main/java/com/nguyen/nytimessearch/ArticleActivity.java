@@ -10,25 +10,30 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class ArticleActivity extends AppCompatActivity {
+   @Bind(R.id.article) WebView mWebView;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_article);
+      ButterKnife.bind(this);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
       Article article = (Article)getIntent().getSerializableExtra("article");
-      WebView webView = (WebView)findViewById(R.id.article);
+      // WebView mWebView = (WebView)findViewById(R.id.article);
       // set up to open WebView and not a browser
-      webView.setWebViewClient(new WebViewClient() {
+      mWebView.setWebViewClient(new WebViewClient() {
          @Override
          public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
          }
       });
-      webView.loadUrl(article.getWebUrl());
+      mWebView.loadUrl(article.getWebUrl());
    }
 
    @Override
@@ -39,9 +44,9 @@ public class ArticleActivity extends AppCompatActivity {
       Intent shareIntent = new Intent(Intent.ACTION_SEND);
       shareIntent.setType("text/plain");
       // get reference to WebView
-      WebView webView = (WebView)findViewById(R.id.article);
+      // WebView mWebView = (WebView)findViewById(R.id.article);
       // pass in the URL currently being used by the WebView
-      shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
+      shareIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
       shareActionProvider.setShareIntent(shareIntent);
 
       return super.onCreateOptionsMenu(menu);

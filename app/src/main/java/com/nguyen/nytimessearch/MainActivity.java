@@ -30,30 +30,33 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.SettingsSaver {
    private final int REQUEST_CODE = 20;
-   Settings             mSettings;
-   EditText             mQueryView;
-   Button               mSearchButton;
-   RecyclerView         mResultsView;
+   Settings mSettings;
+   @Bind(R.id.query)                   EditText       mQueryView;
+   @Bind(R.id.search)                  Button         mSearchButton;
+   @Bind(R.id.results_recycler_view)   RecyclerView   mResultsView;
    // ArticlesAdapter      mAdapter;
    ComplexRecyclerViewAdapter mAdapter;
-   List<Article>        mArticles;
-   String               mQueryString;
+   List<Article>  mArticles;
+   String         mQueryString;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_main);
+      ButterKnife.bind(this);
 
       // setup non-View data
       mSettings = new Settings();
 
       // set up simple View's
-      mQueryView = (EditText)findViewById(R.id.query);
-      mSearchButton = (Button)findViewById(R.id.search);
+      // mQueryView = (EditText)findViewById(R.id.query);
+      // mSearchButton = (Button)findViewById(R.id.search);
       mSearchButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
 
       // setup ListView/RecyclerView
       // lookup the recyclerview in activity layout
-      mResultsView = (RecyclerView)findViewById(R.id.results_recycler_view);
+      // mResultsView = (RecyclerView)findViewById(R.id.results_recycler_view);
       // set layout manager to position the items
       GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
       // StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
