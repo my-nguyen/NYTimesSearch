@@ -11,16 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by My on 11/10/2015.
  */
 public class DatePickerFragment extends DialogFragment {
+   @Bind(R.id.date_picker) DatePicker datePicker;
+
    @Override
    public Dialog onCreateDialog(Bundle bundle)
    {
       // use the DatePicker layout
       View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_date_picker, null);
-      final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
+      ButterKnife.bind(this, view);
+      // final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
       // extract the Date object passed in via newInstance()
       Date date = (Date)getArguments().getSerializable("DAY_IN");
       if (date == null)

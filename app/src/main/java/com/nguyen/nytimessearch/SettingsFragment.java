@@ -18,14 +18,22 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * Created by My on 2/10/2016.
  */
 public class SettingsFragment extends DialogFragment {
    private static final int REQUEST_DATE = 30;
-   private EditText        mBeginDate;
    private Settings        mSettings;
    private SettingsSaver   mSettingsSaver;
+   @Bind(R.id.begin_date_edit_text)    EditText mBeginDate;
+   @Bind(R.id.sort_order_spinner)      Spinner  sortOrder;
+   @Bind(R.id.arts_check_box)          CheckBox arts;
+   @Bind(R.id.fashion_style_check_box) CheckBox fashionStyle;
+   @Bind(R.id.sports_check_box)        CheckBox sports;
+   @Bind(R.id.save_button)             Button   save;
 
    // this interface is used to pass data (Settings) from SettingsFragment to MainActivity
    public interface SettingsSaver {
@@ -59,7 +67,15 @@ public class SettingsFragment extends DialogFragment {
    @Nullable
    @Override
    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-      return inflater.inflate(R.layout.fragment_settings, container);
+      View view = inflater.inflate(R.layout.fragment_settings, container);
+      ButterKnife.bind(this, view);
+      return view;
+   }
+
+   @Override
+   public void onDestroyView() {
+      super.onDestroyView();
+      ButterKnife.unbind(this);
    }
 
    @Override
@@ -71,7 +87,7 @@ public class SettingsFragment extends DialogFragment {
       Log.i("NGUYEN", "SettingsActivity received Settings from MainActivity: " + mSettings);
 
       // set up "Begin Date"
-      mBeginDate = (EditText)view.findViewById(R.id.begin_date_edit_text);
+      // mBeginDate = (EditText)view.findViewById(R.id.begin_date_edit_text);
       // display the current date in the EditText
       if (mSettings.beginDate != null)
          mBeginDate.setText(mSettings.beginDate.toString());
@@ -92,7 +108,7 @@ public class SettingsFragment extends DialogFragment {
 
       // set up "Sort Order"
       // set up Spinner on screen by populating the drop-down list
-      Spinner sortOrder = (Spinner)view.findViewById(R.id.sort_order_spinner);
+      // Spinner sortOrder = (Spinner)view.findViewById(R.id.sort_order_spinner);
       // create an ArrayAdapter using sort_order_array and a default spinner layout
       ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
             R.array.sort_order_array, android.R.layout.simple_spinner_item);
@@ -114,7 +130,7 @@ public class SettingsFragment extends DialogFragment {
       });
 
       // set up "News Desk Values"
-      CheckBox arts = (CheckBox)view.findViewById(R.id.arts_check_box);
+      // CheckBox arts = (CheckBox)view.findViewById(R.id.arts_check_box);
       arts.setChecked(mSettings.arts);
       arts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
          @Override
@@ -122,7 +138,7 @@ public class SettingsFragment extends DialogFragment {
             mSettings.arts = isChecked;
          }
       });
-      CheckBox fashionStyle = (CheckBox)view.findViewById(R.id.fashion_style_check_box);
+      // CheckBox fashionStyle = (CheckBox)view.findViewById(R.id.fashion_style_check_box);
       fashionStyle.setChecked(mSettings.fashionStyle);
       fashionStyle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
          @Override
@@ -130,7 +146,7 @@ public class SettingsFragment extends DialogFragment {
             mSettings.fashionStyle = isChecked;
          }
       });
-      CheckBox sports = (CheckBox)view.findViewById(R.id.sports_check_box);
+      // CheckBox sports = (CheckBox)view.findViewById(R.id.sports_check_box);
       sports.setChecked(mSettings.sports);
       sports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
          @Override
@@ -140,7 +156,7 @@ public class SettingsFragment extends DialogFragment {
       });
 
       // set up Save button
-      Button save = (Button)view.findViewById(R.id.save_button);
+      // Button save = (Button)view.findViewById(R.id.save_button);
       save.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {

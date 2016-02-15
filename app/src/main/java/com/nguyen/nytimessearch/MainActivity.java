@@ -7,17 +7,13 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.ShareActionProvider;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -36,14 +32,14 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.SettingsSaver {
    private final int REQUEST_CODE = 20;
-   Settings mSettings;
    @Bind(R.id.query)                   EditText       mQueryView;
    @Bind(R.id.search)                  Button         mSearchButton;
    @Bind(R.id.results_recycler_view)   RecyclerView   mResultsView;
+   Settings                   mSettings;
    // ArticlesAdapter      mAdapter;
    ComplexRecyclerViewAdapter mAdapter;
-   List<Article>  mArticles;
-   String         mQueryString;
+   List<Article>              mArticles;
+   String                     mQueryString;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {

@@ -43,8 +43,6 @@ public class ArticleActivity extends AppCompatActivity {
       ShareActionProvider shareActionProvider = (ShareActionProvider)MenuItemCompat.getActionProvider(shareItem);
       Intent shareIntent = new Intent(Intent.ACTION_SEND);
       shareIntent.setType("text/plain");
-      // get reference to WebView
-      // WebView mWebView = (WebView)findViewById(R.id.article);
       // pass in the URL currently being used by the WebView
       shareIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
       shareActionProvider.setShareIntent(shareIntent);
