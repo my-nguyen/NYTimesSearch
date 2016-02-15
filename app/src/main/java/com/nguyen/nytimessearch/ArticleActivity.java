@@ -16,6 +16,7 @@ public class ArticleActivity extends AppCompatActivity {
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_article);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
       Article article = (Article)getIntent().getSerializableExtra("article");
       WebView webView = (WebView)findViewById(R.id.article);

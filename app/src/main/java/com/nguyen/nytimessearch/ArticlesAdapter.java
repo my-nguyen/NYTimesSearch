@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
       // public DynamicHeightImageView  mImage;
       public ImageView  mImage;
       public TextView   mTitle;
-      private Context   mContext;
 
       // we also create a constructor that accepts the entire item row and does the view lookups to
       // find each subview
@@ -87,6 +87,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
          // holder.mImage.setHeightRatio(((double)holder.mImage.getHeight())/holder.mImage.getWidth());
          Picasso.with(mContext).load(thumbnail).into(holder.mImage);
       }
+      // Log.d("NGUYEN", "onBindViewHolder(), thumbnail: " + article.getThumbNail() + ", title: " + article.getHeadline());
       // set article's title
       holder.mTitle.setText(article.getHeadline());;
    }

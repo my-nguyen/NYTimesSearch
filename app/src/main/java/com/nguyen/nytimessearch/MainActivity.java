@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
    EditText             mQueryView;
    Button               mSearchButton;
    RecyclerView         mResultsView;
-   ArticlesAdapter      mAdapter;
+   // ArticlesAdapter      mAdapter;
+   ComplexRecyclerViewAdapter mAdapter;
    List<Article>        mArticles;
    String               mQueryString;
 
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
       // set layout manager to position the items
       GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
       // StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
+      // layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NOfNE);
       mResultsView.setLayoutManager(layoutManager);
       mResultsView.addOnScrollListener(new EndlessScrollListener(layoutManager) {
          public void onLoadMore(int page, int totalItemsCount) {
@@ -155,10 +157,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
       params.put("page", "" + page);
       // clear UI on a fresh search
       if (page == 0) {
-         // mAdapter.clear();
          mArticles = new ArrayList<>();
-         // mAdapter = new ArticlesAdapter(mArticles);
-         // mResultsView.setAdapter(mAdapter);
       }
 
       client.get(url, params, new JsonHttpResponseHandler() {
@@ -168,10 +167,10 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             JSONArray articleJsonResults = null;
             try {
                articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
-               // mAdapter.addAll(Article.fromJsonArray(articleJsonResults));
                // create adapter passing in the sample user data
                mArticles.addAll(Article.fromJsonArray(articleJsonResults));
-               mAdapter = new ArticlesAdapter(mArticles);
+               // mAdapter = new ArticlesAdapter(mArticles);
+               mAdapter = new ComplexRecyclerViewAdapter(mArticles);
                // attach the adapter to the recyclerview to populate items
                mResultsView.setAdapter(mAdapter);
             } catch (JSONException e) {
