@@ -17,13 +17,13 @@ import java.util.List;
 /**
  * Created by My on 2/14/2016.
  */
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HeterogenousAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
    private List<Article>   mArticles;
    private Context         mContext;
    private final int TITLE_ONLY = 0, TITLE_IMAGE = 1;
 
    // Provide a suitable constructor (depends on the kind of dataset)
-   public RecyclerViewAdapter(List<Article> items) {
+   public HeterogenousAdapter(List<Article> items) {
       mArticles = items;
    }
 
