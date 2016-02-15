@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import org.parceler.Parcels;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -21,7 +23,7 @@ public class ArticleActivity extends AppCompatActivity {
       // create an intent to display the article
       Intent intent = new Intent(context, ArticleActivity.class);
       // pass Article into intent. even though Article is Serializable, calling putExtra() will do
-      intent.putExtra("ARTICLE_IN", article);
+      intent.putExtra("ARTICLE_IN", Parcels.wrap(article));
       return intent;
    }
 
@@ -33,7 +35,8 @@ public class ArticleActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
       // extract Article from Intent. since Article is Serializable, we need to call getSerializableExtra()
-      Article article = (Article)getIntent().getSerializableExtra("ARTICLE_IN");
+      // Article article = (Article)getIntent().getSerializableExtra("ARTICLE_IN");
+      Article article = (Article)Parcels.unwrap(getIntent().getParcelableExtra("ARTICLE_IN"));
       // WebView mWebView = (WebView)findViewById(R.id.article);
       // set up to open WebView and not a browser
       mWebView.setWebViewClient(new WebViewClient() {

@@ -3,6 +3,7 @@ package com.nguyen.nytimessearch;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 /**
  * Created by My on 2/9/2016.
  */
-public class Article implements Serializable {
+@Parcel
+public class Article {
    String webUrl;
    String headline;
    String thumbNail;
@@ -26,6 +28,9 @@ public class Article implements Serializable {
 
    public String getThumbNail() {
       return thumbNail;
+   }
+
+   public Article() {
    }
 
    public Article(JSONObject jsonObject) {
