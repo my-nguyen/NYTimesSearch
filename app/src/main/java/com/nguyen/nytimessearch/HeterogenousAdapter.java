@@ -114,12 +114,10 @@ public class HeterogenousAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
    }
 
    private void startArticleActivity(int position) {
-      // create an intent to display the article
-      Intent intent = new Intent(mContext, ArticleActivity.class);
       // get the article to display
       Article article = mArticles.get(position);
-      // pass that article into intent
-      intent.putExtra("article", article);
+      // create an intent to display the article, passing that article into intent
+      Intent intent = ArticleActivity.newIntent(mContext, article);
       // launch the activity
       mContext.startActivity(intent);
    }

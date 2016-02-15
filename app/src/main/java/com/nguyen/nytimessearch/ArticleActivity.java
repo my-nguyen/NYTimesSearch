@@ -1,5 +1,6 @@
 package com.nguyen.nytimessearch;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,14 @@ import butterknife.ButterKnife;
 public class ArticleActivity extends AppCompatActivity {
    @Bind(R.id.article) WebView mWebView;
 
+   public static Intent newIntent(Context context, Article article) {
+      // create an intent to display the article
+      Intent intent = new Intent(context, ArticleActivity.class);
+      // pass Article into intent. even though Article is Serializable, calling putExtra() will do
+      intent.putExtra("ARTICLE_IN", article);
+      return intent;
+   }
+
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
@@ -23,7 +32,8 @@ public class ArticleActivity extends AppCompatActivity {
       ButterKnife.bind(this);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-      Article article = (Article)getIntent().getSerializableExtra("article");
+      // extract Article from Intent. since Article is Serializable, we need to call getSerializableExtra()
+      Article article = (Article)getIntent().getSerializableExtra("ARTICLE_IN");
       // WebView mWebView = (WebView)findViewById(R.id.article);
       // set up to open WebView and not a browser
       mWebView.setWebViewClient(new WebViewClient() {

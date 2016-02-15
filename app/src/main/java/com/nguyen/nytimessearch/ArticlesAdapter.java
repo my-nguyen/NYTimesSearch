@@ -41,14 +41,12 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
          itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // create an intent to display the article
-               Intent intent = new Intent(context, ArticleActivity.class);
                // get the article to display
                Article article = mArticles.get(getLayoutPosition());
-               // pass that article into intent
-               intent.putExtra("article", article);
+               // create an intent to display the article, passing that article into intent
+               Intent intent = ArticleActivity.newIntent(mContext, article);
                // launch the activity
-               context.startActivity(intent);
+               mContext.startActivity(intent);
             }
          });
       }
