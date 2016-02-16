@@ -15,13 +15,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,15 +164,16 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
          mArticles = new ArrayList<>();
       }
 
+      /*
       client.get(url, params, new JsonHttpResponseHandler() {
          @Override
          public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             Log.d("NGUYEN", "onSuccess(), response: " + response);
-            JSONArray articleJsonResults = null;
+            JSONArray docsJsonArray = null;
             try {
-               articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
+               docsJsonArray = response.getJSONObject("response").getJSONArray("docs");
                // create adapter passing in the sample user data
-               mArticles.addAll(Article.fromJsonArray(articleJsonResults));
+               mArticles.addAll(Article.fromJsonArray(docsJsonArray));
                // mAdapter = new ArticlesAdapter(mArticles);
                mAdapter = new HeterogenousAdapter(mArticles);
                // attach the adapter to the recyclerview to populate items
@@ -175,6 +181,24 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             } catch (JSONException e) {
                e.printStackTrace();
             }
+         }
+      });
+      */
+      client.get(url, params, new TextHttpResponseHandler() {
+         @Override
+         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+         }
+         @Override
+         public void onSuccess(int statusCode, Header[] headers, String responseString) {
+            Log.d("NGUYEN", "onSuccess(), response: " + responseString);
+            JsonElement jsonElement = new JsonParser().parse(responseString);
+            JsonArray docsJsonArray = jsonElement.getAsJsonObject().getAsJsonObject("response").getAsJsonArray("docs");
+            // create adapter passing in the sample user data
+            mArticles.addAll(Article.fromJsonArray(docsJsonArray));
+            // mAdapter = new ArticlesAdapter(mArticles);
+            mAdapter = new HeterogenousAdapter(mArticles);
+            // attach the adapter to the recyclerview to populate items
+            mResultsView.setAdapter(mAdapter);
          }
       });
    }
