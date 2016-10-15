@@ -1,4 +1,4 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.nguyen.nytimessearch.activities.ArticleActivity;
+import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.models.Article;
 
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class HeterogenousAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
    @Override
    public int getItemViewType(int position) {
       Article article = mArticles.get(position);
-      if (TextUtils.isEmpty(article.getThumbNail()))
+      if (TextUtils.isEmpty(article.thumbNail))
          return TITLE_ONLY;
       else
          return TITLE_IMAGE;

@@ -1,4 +1,4 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.nguyen.nytimessearch.activities.ArticleActivity;
+import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.models.Article;
 
 import java.util.List;
 
@@ -78,7 +81,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
       // get the data model based on position
       Article article = mArticles.get(position);
       // populate the thumbnail image by remote downloading the image in the background
-      String thumbnail = article.getThumbNail();
+      String thumbnail = article.thumbNail;
       if (!TextUtils.isEmpty(thumbnail)) {
          // set the height ratio before loading an image into Picasso
          // holder.mImage.setHeightRatio(((double)holder.mImage.getHeight())/holder.mImage.getWidth());
@@ -86,7 +89,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
       }
       // Log.d("NGUYEN", "onBindViewHolder(), thumbnail: " + article.getThumbNail() + ", title: " + article.getHeadline());
       // set article's title
-      holder.mTitle.setText(article.getHeadline());;
+      holder.mTitle.setText(article.headline);;
    }
 
    // return the total count of items

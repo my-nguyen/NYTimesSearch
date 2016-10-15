@@ -1,4 +1,4 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.models.Article;
 
 import org.parceler.Parcels;
 
@@ -46,7 +49,7 @@ public class ArticleActivity extends AppCompatActivity {
             return true;
          }
       });
-      mWebView.loadUrl(article.getWebUrl());
+      mWebView.loadUrl(article.webUrl);
    }
 
    @Override

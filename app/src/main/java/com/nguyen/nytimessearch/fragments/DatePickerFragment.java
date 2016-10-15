@@ -1,4 +1,4 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.fragments;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -10,6 +10,9 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
+
+import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.models.Date;
 
 import org.parceler.Parcels;
 

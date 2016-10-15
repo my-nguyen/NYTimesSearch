@@ -1,9 +1,10 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.models;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.nguyen.nytimessearch.ArticleDeserializer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,21 +19,9 @@ import java.util.List;
  */
 @Parcel
 public class Article {
-   String webUrl;
-   String headline;
-   String thumbNail;
-
-   public String getWebUrl() {
-      return webUrl;
-   }
-
-   public String getHeadline() {
-      return headline;
-   }
-
-   public String getThumbNail() {
-      return thumbNail;
-   }
+   public String webUrl;
+   public String headline;
+   public String thumbNail;
 
    @Override
    public String toString() {

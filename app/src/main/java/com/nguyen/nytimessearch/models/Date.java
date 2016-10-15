@@ -1,8 +1,7 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.models;
 
 import org.parceler.Parcel;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -14,9 +13,9 @@ import java.util.GregorianCalendar;
 // data sending between Activities and Fragments.
 @Parcel
 public class Date {
-   int year;
-   int month;
-   int day;
+   public int year;
+   public int month;
+   public int day;
 
    public Date() {
       Calendar date = new GregorianCalendar();

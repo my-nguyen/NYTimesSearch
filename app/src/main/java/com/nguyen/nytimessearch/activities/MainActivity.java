@@ -1,4 +1,4 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.activities;
 
 import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
@@ -21,6 +21,12 @@ import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
+import com.nguyen.nytimessearch.EndlessScrollListener;
+import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.models.Settings;
+import com.nguyen.nytimessearch.fragments.SettingsFragment;
+import com.nguyen.nytimessearch.adapters.HeterogenousAdapter;
+import com.nguyen.nytimessearch.models.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +37,13 @@ import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.SettingsSaver {
    private final int REQUEST_CODE = 20;
-   @Bind(R.id.query)                   EditText       mQueryView;
-   @Bind(R.id.search)                  Button         mSearchButton;
-   @Bind(R.id.results_recycler_view)   RecyclerView   mResultsView;
-   Settings             mSettings;
-   // ArticlesAdapter   mAdapter;
+   @Bind(R.id.query) EditText mQueryView;
+   @Bind(R.id.search) Button mSearchButton;
+   @Bind(R.id.results_recycler_view) RecyclerView mResultsView;
+   Settings mSettings;
    HeterogenousAdapter mAdapter;
-   List<Article>        mArticles;
-   String               mQueryString;
+   List<Article> mArticles;
+   String mQueryString;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +55,6 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
       mSettings = new Settings();
 
       // set up simple View's
-      // mQueryView = (EditText)findViewById(R.id.query);
-      // mSearchButton = (Button)findViewById(R.id.search);
       mSearchButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
@@ -65,12 +68,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
       });
 
       // setup ListView/RecyclerView
-      // lookup the recyclerview in activity layout
-      // mResultsView = (RecyclerView)findViewById(R.id.results_recycler_view);
-      // set layout manager to position the items
       GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
-      // StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
-      // layoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NOfNE);
       mResultsView.setLayoutManager(layoutManager);
       mResultsView.addOnScrollListener(new EndlessScrollListener(layoutManager) {
          public void onLoadMore(int page, int totalItemsCount) {
@@ -158,26 +156,6 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
          mArticles = new ArrayList<>();
       }
 
-      /*
-      client.get(url, params, new JsonHttpResponseHandler() {
-         @Override
-         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            Log.d("NGUYEN", "onSuccess(), response: " + response);
-            JSONArray docsJsonArray = null;
-            try {
-               docsJsonArray = response.getJSONObject("response").getJSONArray("docs");
-               // create adapter passing in the sample user data
-               mArticles.addAll(Article.fromJsonArray(docsJsonArray));
-               // mAdapter = new ArticlesAdapter(mArticles);
-               mAdapter = new HeterogenousAdapter(mArticles);
-               // attach the adapter to the recyclerview to populate items
-               mResultsView.setAdapter(mAdapter);
-            } catch (JSONException e) {
-               e.printStackTrace();
-            }
-         }
-      });
-      */
       client.get(url, params, new TextHttpResponseHandler() {
          @Override
          public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

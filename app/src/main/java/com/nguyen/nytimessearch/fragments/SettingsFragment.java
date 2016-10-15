@@ -1,4 +1,4 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.fragments;
 
 
 import android.app.Activity;
@@ -18,6 +18,10 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.models.Settings;
+import com.nguyen.nytimessearch.models.Date;
+
 import org.parceler.Parcels;
 
 import butterknife.Bind;
@@ -28,14 +32,14 @@ import butterknife.ButterKnife;
  */
 public class SettingsFragment extends DialogFragment {
    private static final int REQUEST_DATE = 30;
-   private Settings        mSettings;
-   private SettingsSaver   mSettingsSaver;
-   @Bind(R.id.begin_date_edit_text)    EditText mBeginDate;
-   @Bind(R.id.sort_order_spinner)      Spinner  sortOrder;
-   @Bind(R.id.arts_check_box)          CheckBox arts;
+   private Settings mSettings;
+   private SettingsSaver mSettingsSaver;
+   @Bind(R.id.begin_date_edit_text) EditText mBeginDate;
+   @Bind(R.id.sort_order_spinner) Spinner sortOrder;
+   @Bind(R.id.arts_check_box) CheckBox arts;
    @Bind(R.id.fashion_style_check_box) CheckBox fashionStyle;
-   @Bind(R.id.sports_check_box)        CheckBox sports;
-   @Bind(R.id.save_button)             Button   save;
+   @Bind(R.id.sports_check_box) CheckBox sports;
+   @Bind(R.id.save_button) Button save;
 
    // this interface is used to pass data (Settings) from SettingsFragment to MainActivity
    public interface SettingsSaver {

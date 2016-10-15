@@ -1,8 +1,9 @@
-package com.nguyen.nytimessearch;
+package com.nguyen.nytimessearch.models;
+
+import com.nguyen.nytimessearch.models.Date;
 
 import org.parceler.Parcel;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +12,18 @@ import java.util.List;
  */
 @Parcel
 public class Settings {
-   Date     beginDate = null;
-   String   sortOrder = null;
-   boolean  arts = false;
-   boolean  fashionStyle = false;
-   boolean  sports = false;
+   public Date beginDate;
+   public String sortOrder;
+   public boolean arts;
+   public boolean fashionStyle;
+   public boolean sports;
 
    public Settings() {
+      beginDate = null;
+      sortOrder = null;
+      arts = false;
+      fashionStyle = false;
+      sports = false;
    }
 
    public String getBeginDate() {
