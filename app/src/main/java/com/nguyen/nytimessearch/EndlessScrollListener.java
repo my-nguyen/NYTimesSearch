@@ -4,11 +4,14 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 /**
  * Created by My on 2/11/2016.
  */
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
+   // note that the current value of 5 for visibleThreshold is only applicable to a phone;
+   // with a tablet, you'd need to set it to something else
    // The minimum amount of items to have below your current scroll position before loading more.
    private int visibleThreshold = 5;
    // The current offset index of data you have loaded
@@ -94,8 +97,10 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
       // If it isn’t currently loading, we check to see if we have breached the visibleThreshold and
       // need to reload more data. If we do need to reload some more data, we execute onLoadMore to
       // fetch the data. threshold should reflect how many total columns there are too
+      Log.d("TRUONG", "loading: " + loading + ", lastVisibleItemPosition: " + lastVisibleItemPosition + ", visibleThreshold: " + visibleThreshold + ", totalItemCount: " + totalItemCount);
       if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
          currentPage++;
+         Log.d("TRUONG", "onScrolled() calling onLoadMore(), currentPage: " + currentPage);
          onLoadMore(currentPage, totalItemCount);
          loading = true;
       }

@@ -87,7 +87,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
          // holder.mImage.setHeightRatio(((double)holder.mImage.getHeight())/holder.mImage.getWidth());
          Glide.with(mContext).load(thumbnail).into(holder.mImage);
       }
-      // Log.d("NGUYEN", "onBindViewHolder(), thumbnail: " + article.getThumbNail() + ", title: " + article.getHeadline());
       // set article's title
       holder.mTitle.setText(article.headline);;
    }

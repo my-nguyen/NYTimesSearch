@@ -90,7 +90,7 @@ public class SettingsFragment extends DialogFragment {
 
       // extract the Settings object passed in via NewInstance()
       mSettings = (Settings)Parcels.unwrap(getArguments().getParcelable("SETTINGS_IN"));
-      Log.i("NGUYEN", "SettingsActivity received Settings from MainActivity: " + mSettings);
+      Log.i("TRUONG", "SettingsActivity received Settings from MainActivity: " + mSettings);
 
       // set up "Begin Date"
       // mBeginDate = (EditText)view.findViewById(R.id.begin_date_edit_text);
@@ -122,7 +122,7 @@ public class SettingsFragment extends DialogFragment {
       adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
       // apply the adapter to the spinner
       sortOrder.setAdapter(adapter);
-      Log.i("NGUYEN", "at spinner, settings: " + mSettings);
+      Log.i("TRUONG", "at spinner, settings: " + mSettings);
       // set the Spinner to the pre-selected Sort Order
       sortOrder.setSelection(adapter.getPosition(mSettings.sortOrder));
       sortOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

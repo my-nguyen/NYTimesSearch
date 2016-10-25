@@ -1,6 +1,9 @@
 package com.nguyen.nytimessearch.activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -28,6 +32,7 @@ import com.nguyen.nytimessearch.fragments.SettingsFragment;
 import com.nguyen.nytimessearch.adapters.HeterogenousAdapter;
 import com.nguyen.nytimessearch.models.Article;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
       mResultsView.setLayoutManager(layoutManager);
       mResultsView.addOnScrollListener(new EndlessScrollListener(layoutManager) {
          public void onLoadMore(int page, int totalItemsCount) {
-            Log.i("NGUYEN", "onLoadMore() fetching page " + page);
+            Log.i("TRUONG", "onLoadMore() fetching page " + page);
             fetchPage(page);
             mAdapter.notifyItemRangeInserted(mAdapter.getItemCount(), mArticles.size() - 1);
          }
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
       if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
          mSettings = (Settings)data.getSerializableExtra("SETTINGS_OUT");
-         Log.i("NGUYEN", "MainActivity received Settings from SettingsActivity: " + mSettings);
+         Log.i("TRUONG", "MainActivity received Settings from SettingsActivity: " + mSettings);
       }
    }
 
@@ -134,6 +139,11 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
    }
 
    private void fetchPage(int page) {
+      if (!isNetworkAvailable()) {// || !isOnline()) {
+         Toast.makeText(this, "Network unavailable!", Toast.LENGTH_LONG).show();
+         return;
+      }
+
       AsyncHttpClient client = new AsyncHttpClient();
       String url = "http://api.nytimes.com/svc/search/v2/articlesearch.json";
 
@@ -162,16 +172,36 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
          }
          @Override
          public void onSuccess(int statusCode, Header[] headers, String responseString) {
-            Log.d("NGUYEN", "onSuccess(), response: " + responseString);
+            Log.d("TRUONG", "onSuccess(), response: " + responseString);
             JsonElement jsonElement = new JsonParser().parse(responseString);
             JsonArray docsJsonArray = jsonElement.getAsJsonObject().getAsJsonObject("response").getAsJsonArray("docs");
+            List<Article> articles = Article.fromJsonArray(docsJsonArray);
+            Log.d("TRUONG", "onSuccess(), current list: " + mArticles.size() + ", new fetch: " + articles.size());
             // create adapter passing in the sample user data
-            mArticles.addAll(Article.fromJsonArray(docsJsonArray));
+            mArticles.addAll(articles);
             // mAdapter = new ArticlesAdapter(mArticles);
             mAdapter = new HeterogenousAdapter(mArticles);
             // attach the adapter to the recyclerview to populate items
             mResultsView.setAdapter(mAdapter);
          }
       });
+   }
+
+   private Boolean isNetworkAvailable() {
+      ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+      NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+      return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+   }
+
+   public boolean isOnline() {
+      Runtime runtime = Runtime.getRuntime();
+      try {
+         Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+         int exitValue = ipProcess.waitFor();
+         Log.d("TRUONG", "exitValue: " + exitValue);
+         return (exitValue == 0);
+      } catch (IOException e) { e.printStackTrace(); }
+      catch (InterruptedException e) { e.printStackTrace(); }
+      return false;
    }
 }
