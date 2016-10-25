@@ -40,16 +40,13 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
          mTitle = (TextView)itemView.findViewById(R.id.title);
          mImage = (ImageView)itemView.findViewById(R.id.image);
          // attach a click listener to the entire row view
-         itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               // get the article to display
-               Article article = mArticles.get(getLayoutPosition());
-               // create an intent to display the article, passing that article into intent
-               Intent intent = ArticleActivity.newIntent(mContext, article);
-               // launch the activity
-               mContext.startActivity(intent);
-            }
+         itemView.setOnClickListener(v -> {
+            // get the article to display
+            Article article = mArticles.get(getLayoutPosition());
+            // create an intent to display the article, passing that article into intent
+            Intent intent = ArticleActivity.newIntent(mContext, article);
+            // launch the activity
+            mContext.startActivity(intent);
          });
       }
    }

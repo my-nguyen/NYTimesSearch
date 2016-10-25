@@ -90,12 +90,7 @@ public class HeterogenousAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
       public ViewHolder1(View view) {
          super(view);
          mTitle = (TextView)view.findViewById(R.id.title);
-         view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startArticleActivity(getLayoutPosition());
-            }
-         });
+         view.setOnClickListener(v -> startArticleActivity(getLayoutPosition()));
       }
    }
 
@@ -107,12 +102,7 @@ public class HeterogenousAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
          super(view);
          mImage = (ImageView)view.findViewById(R.id.image);
          mTitle = (TextView)view.findViewById(R.id.title);
-         view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startArticleActivity(getLayoutPosition());
-            }
-         });
+         view.setOnClickListener(v -> startArticleActivity(getLayoutPosition()));
       }
    }
 

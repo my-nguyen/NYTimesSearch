@@ -57,15 +57,12 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
       mSettings = new Settings();
 
       // set up simple View's
-      mBinding.search.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            mQueryString = mBinding.query.getText().toString();
-            // make sure query string is not empty
-            if (!TextUtils.isEmpty(mQueryString)) {
-               // start a fresh search
-               fetchPage(0);
-            }
+      mBinding.search.setOnClickListener(v -> {
+         mQueryString = mBinding.query.getText().toString();
+         // make sure query string is not empty
+         if (!TextUtils.isEmpty(mQueryString)) {
+            // start a fresh search
+            fetchPage(0);
          }
       });
 

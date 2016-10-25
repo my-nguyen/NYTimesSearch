@@ -101,14 +101,11 @@ public class SettingsFragment extends DialogFragment {
       // Show soft keyboard automatically
       // getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
       // set up DatePicker dialog
-      mBeginDate.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            // pop up a DatePicker dialog, passing the current Date to it.
-            DatePickerFragment dialog = DatePickerFragment.newInstance(mSettings.beginDate);
-            dialog.setTargetFragment(SettingsFragment.this, REQUEST_DATE);
-            dialog.show(getFragmentManager(), "DatePickerDialog");
-         }
+      mBeginDate.setOnClickListener(v -> {
+         // pop up a DatePicker dialog, passing the current Date to it.
+         DatePickerFragment dialog = DatePickerFragment.newInstance(mSettings.beginDate);
+         dialog.setTargetFragment(SettingsFragment.this, REQUEST_DATE);
+         dialog.show(getFragmentManager(), "DatePickerDialog");
       });
 
       // set up "Sort Order"
@@ -135,36 +132,18 @@ public class SettingsFragment extends DialogFragment {
 
       // set up "News Desk Values"
       arts.setChecked(mSettings.arts);
-      arts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-         @Override
-         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            mSettings.arts = isChecked;
-         }
-      });
+      arts.setOnCheckedChangeListener((buttonView, isChecked) -> mSettings.arts = isChecked);
       fashionStyle.setChecked(mSettings.fashionStyle);
-      fashionStyle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-         @Override
-         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            mSettings.fashionStyle = isChecked;
-         }
-      });
+      fashionStyle.setOnCheckedChangeListener((buttonView, isChecked) -> mSettings.fashionStyle = isChecked);
       sports.setChecked(mSettings.sports);
-      sports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-         @Override
-         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            mSettings.sports = isChecked;
-         }
-      });
+      sports.setOnCheckedChangeListener((buttonView, isChecked) -> mSettings.sports = isChecked);
 
       // set up Save button
-      save.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-            // package up a Settings object to send back to the parent, MainActivity
-            Intent data = new Intent();
-            data.putExtra("SETTINGS_OUT", Parcels.wrap(mSettings));
-            dismiss();
-         }
+      save.setOnClickListener(v -> {
+         // package up a Settings object to send back to the parent, MainActivity
+         Intent data = new Intent();
+         data.putExtra("SETTINGS_OUT", Parcels.wrap(mSettings));
+         dismiss();
       });
    }
 

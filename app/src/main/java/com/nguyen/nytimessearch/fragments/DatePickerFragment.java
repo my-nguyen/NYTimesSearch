@@ -45,21 +45,15 @@ public class DatePickerFragment extends DialogFragment {
             .setTitle(R.string.date_picker_title)
             // when the user presses the positive button in the dialog, retrieve the Date from
             // DatePicker and send the result back to DetailFragment
-            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-               @Override
-               // upon OK button click, this callback method packages up the newly selected Date
-               // and call the SettingsActivity callback save() to pass the Date back to that
-               // Activity and also update the Date EditText in that Activity
-               public void onClick(DialogInterface dialog, int which) {
-                  Date date = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
-                  // pass the selected Date object out to the target fragment (SettingsFragment)
-                  if (getTargetFragment() != null) {
-                     // create an Intent to stuff a Date object in it
-                     Intent intent = new Intent();
-                     intent.putExtra("DAY_OUT", Parcels.wrap(date));
-                     // pass the selected Date object back to the calling fragment (SettingsFragment)
-                     getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-                  }
+            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+               Date date1 = new Date(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
+               // pass the selected Date object out to the target fragment (SettingsFragment)
+               if (getTargetFragment() != null) {
+                  // create an Intent to stuff a Date object in it
+                  Intent intent = new Intent();
+                  intent.putExtra("DAY_OUT", Parcels.wrap(date1));
+                  // pass the selected Date object back to the calling fragment (SettingsFragment)
+                  getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                }
             })
             .create();
