@@ -39,7 +39,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ViewHo
          super(itemView);
          mTitle = (TextView)itemView.findViewById(R.id.title);
          mImage = (ImageView)itemView.findViewById(R.id.image);
-         // mImage = (DynamicHeightImageView)itemView.findViewById(R.id.image);
          // attach a click listener to the entire row view
          itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,21 +2,19 @@ package com.nguyen.nytimessearch.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.JsonArray;
@@ -27,6 +25,7 @@ import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 import com.nguyen.nytimessearch.EndlessScrollListener;
 import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.databinding.ActivityMainBinding;
 import com.nguyen.nytimessearch.models.Settings;
 import com.nguyen.nytimessearch.fragments.SettingsFragment;
 import com.nguyen.nytimessearch.adapters.HeterogenousAdapter;
@@ -36,15 +35,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements SettingsFragment.SettingsSaver {
    private final int REQUEST_CODE = 20;
-   @Bind(R.id.query) EditText mQueryView;
-   @Bind(R.id.search) Button mSearchButton;
-   @Bind(R.id.results_recycler_view) RecyclerView mResultsView;
+
+   ActivityMainBinding mBinding;
    Settings mSettings;
    HeterogenousAdapter mAdapter;
    List<Article> mArticles;
@@ -53,17 +49,18 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_main);
-      ButterKnife.bind(this);
+
+      // Inflate the content view (replacing `setContentView`)
+      mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
       // setup non-View data
       mSettings = new Settings();
 
       // set up simple View's
-      mSearchButton.setOnClickListener(new View.OnClickListener() {
+      mBinding.search.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            mQueryString = mQueryView.getText().toString();
+            mQueryString = mBinding.query.getText().toString();
             // make sure query string is not empty
             if (!TextUtils.isEmpty(mQueryString)) {
                // start a fresh search
@@ -74,8 +71,8 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
 
       // setup ListView/RecyclerView
       GridLayoutManager layoutManager = new GridLayoutManager(this, 4);
-      mResultsView.setLayoutManager(layoutManager);
-      mResultsView.addOnScrollListener(new EndlessScrollListener(layoutManager) {
+      mBinding.recyclerView.setLayoutManager(layoutManager);
+      mBinding.recyclerView.addOnScrollListener(new EndlessScrollListener(layoutManager) {
          public void onLoadMore(int page, int totalItemsCount) {
             Log.i("TRUONG", "onLoadMore() fetching page " + page);
             fetchPage(page);
@@ -182,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
             // mAdapter = new ArticlesAdapter(mArticles);
             mAdapter = new HeterogenousAdapter(mArticles);
             // attach the adapter to the recyclerview to populate items
-            mResultsView.setAdapter(mAdapter);
+            mBinding.recyclerView.setAdapter(mAdapter);
          }
       });
    }

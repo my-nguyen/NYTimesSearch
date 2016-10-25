@@ -93,7 +93,6 @@ public class SettingsFragment extends DialogFragment {
       Log.i("TRUONG", "SettingsActivity received Settings from MainActivity: " + mSettings);
 
       // set up "Begin Date"
-      // mBeginDate = (EditText)view.findViewById(R.id.begin_date_edit_text);
       // display the current date in the EditText
       if (mSettings.beginDate != null)
          mBeginDate.setText(mSettings.beginDate.toString());
@@ -114,7 +113,6 @@ public class SettingsFragment extends DialogFragment {
 
       // set up "Sort Order"
       // set up Spinner on screen by populating the drop-down list
-      // Spinner sortOrder = (Spinner)view.findViewById(R.id.sort_order_spinner);
       // create an ArrayAdapter using sort_order_array and a default spinner layout
       ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(),
             R.array.sort_order_array, android.R.layout.simple_spinner_item);
@@ -136,7 +134,6 @@ public class SettingsFragment extends DialogFragment {
       });
 
       // set up "News Desk Values"
-      // CheckBox arts = (CheckBox)view.findViewById(R.id.arts_check_box);
       arts.setChecked(mSettings.arts);
       arts.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
          @Override
@@ -144,7 +141,6 @@ public class SettingsFragment extends DialogFragment {
             mSettings.arts = isChecked;
          }
       });
-      // CheckBox fashionStyle = (CheckBox)view.findViewById(R.id.fashion_style_check_box);
       fashionStyle.setChecked(mSettings.fashionStyle);
       fashionStyle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
          @Override
@@ -152,7 +148,6 @@ public class SettingsFragment extends DialogFragment {
             mSettings.fashionStyle = isChecked;
          }
       });
-      // CheckBox sports = (CheckBox)view.findViewById(R.id.sports_check_box);
       sports.setChecked(mSettings.sports);
       sports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
          @Override
@@ -162,7 +157,6 @@ public class SettingsFragment extends DialogFragment {
       });
 
       // set up Save button
-      // Button save = (Button)view.findViewById(R.id.save_button);
       save.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {

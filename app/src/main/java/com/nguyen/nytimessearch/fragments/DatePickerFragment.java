@@ -31,7 +31,6 @@ public class DatePickerFragment extends DialogFragment {
       // use the DatePicker layout
       View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_date_picker, null);
       ButterKnife.bind(this, view);
-      // final DatePicker datePicker = (DatePicker)view.findViewById(R.id.date_picker);
       // extract the Date object passed in via newInstance()
       Date date = (Date)getArguments().getSerializable("DAY_IN");
       if (date == null)

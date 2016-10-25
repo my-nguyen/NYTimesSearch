@@ -2,6 +2,7 @@ package com.nguyen.nytimessearch.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,15 +13,13 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.nguyen.nytimessearch.R;
+import com.nguyen.nytimessearch.databinding.ActivityArticleBinding;
 import com.nguyen.nytimessearch.models.Article;
 
 import org.parceler.Parcels;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 public class ArticleActivity extends AppCompatActivity {
-   @Bind(R.id.article) WebView mWebView;
+   ActivityArticleBinding mBinding;
 
    public static Intent newIntent(Context context, Article article) {
       // create an intent to display the article
@@ -33,23 +32,22 @@ public class ArticleActivity extends AppCompatActivity {
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_article);
-      ButterKnife.bind(this);
+      // Inflate the content view (replacing `setContentView`)
+      mBinding = DataBindingUtil.setContentView(this, R.layout.activity_article);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
       // extract Article from Intent. since Article is Serializable, we need to call getSerializableExtra()
       // Article article = (Article)getIntent().getSerializableExtra("ARTICLE_IN");
       Article article = (Article)Parcels.unwrap(getIntent().getParcelableExtra("ARTICLE_IN"));
-      // WebView mWebView = (WebView)findViewById(R.id.article);
       // set up to open WebView and not a browser
-      mWebView.setWebViewClient(new WebViewClient() {
+      mBinding.article.setWebViewClient(new WebViewClient() {
          @Override
          public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
          }
       });
-      mWebView.loadUrl(article.webUrl);
+      mBinding.article.loadUrl(article.webUrl);
    }
 
    @Override
@@ -60,7 +58,7 @@ public class ArticleActivity extends AppCompatActivity {
       Intent shareIntent = new Intent(Intent.ACTION_SEND);
       shareIntent.setType("text/plain");
       // pass in the URL currently being used by the WebView
-      shareIntent.putExtra(Intent.EXTRA_TEXT, mWebView.getUrl());
+      shareIntent.putExtra(Intent.EXTRA_TEXT, mBinding.article.getUrl());
       shareActionProvider.setShareIntent(shareIntent);
 
       return super.onCreateOptionsMenu(menu);
