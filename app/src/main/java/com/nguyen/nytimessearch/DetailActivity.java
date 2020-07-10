@@ -15,6 +15,15 @@ import androidx.databinding.DataBindingUtil;
 
 import com.nguyen.nytimessearch.databinding.ActivityDetailBinding;
 
+/*
+ * Updated by My on 7/7/2020:
+ * 1. migrated to AndroidX
+ * 2. replaced ButterKnife with data binding
+ * 3. replaced Volley with Retrofit
+ * 4. replaced LinearLayout and RelativeLayout with ConstraintLayout
+ * 5. implemented MVVM
+ * 6. partially implemented Dagger DI
+ */
 public class DetailActivity extends AppCompatActivity {
     private static final String EXTRA_ARTICLE_OBJECT = "ARTICLE_OBJECT";
 

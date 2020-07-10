@@ -6,10 +6,19 @@ import java.util.GregorianCalendar;
 
 /**
  * Created by My on 2/10/2016.
+ * Updated by My on 7/7/2020:
+ * 1. migrated to AndroidX
+ * 2. replaced ButterKnife with data binding
+ * 3. replaced Volley with Retrofit
+ * 4. replaced LinearLayout and RelativeLayout with ConstraintLayout
+ * 5. implemented MVVM
+ * 6. partially implemented Dagger DI
  */
-// this class represents a Date object, which is composed of year, month, and day. this class is a
-// replacement for Java.util.Calendar which contains a lot more fields and is therefore wasteful in
-// data sending between Activities and Fragments.
+/**
+ * this class represents a Date object, which is composed of year, month, and day. this class is a
+ * replacement for Java.util.Calendar which contains a lot more fields and is therefore wasteful in
+ * data sending between Activities and Fragments.
+ */
 public class Date implements Serializable {
     public int year;
     public int month;

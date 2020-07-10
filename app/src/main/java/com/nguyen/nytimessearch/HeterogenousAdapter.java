@@ -18,6 +18,13 @@ import java.util.List;
 
 /**
  * Created by My on 2/14/2016.
+ * Updated by My on 7/7/2020:
+ * 1. migrated to AndroidX
+ * 2. replaced ButterKnife with data binding
+ * 3. replaced Volley with Retrofit
+ * 4. replaced LinearLayout and RelativeLayout with ConstraintLayout
+ * 5. implemented MVVM
+ * 6. partially implemented Dagger DI
  */
 public class HeterogenousAdapter extends RecyclerView.Adapter<HeterogenousAdapter.ViewHolder> {
 
