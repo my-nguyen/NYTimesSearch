@@ -124,34 +124,35 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
     }
 
     private void fetchPage() {
-        mainViewModel.fetchPage(query, page, settings.getBeginDate(), settings.getFilterQuery(), settings.getSortOrder(), NYTIMES_API_KEY).observe(this, new Observer<List<Article>>() {
-            @Override
-            public void onChanged(List<Article> data) {
-                if (data.size() != 0) {
-                    if (page == 0) {
-                        int size = articles.size();
-                        // reset the adapter if this is a new query and the current dataset is not empty
-                        if (size != 0) {
-                            articles.clear();
-                            adapter.notifyItemRangeRemoved(0, size);
+        mainViewModel.fetchPage(query, page, settings.getBeginDate(), settings.getFilterQuery(), settings.getSortOrder(), NYTIMES_API_KEY)
+                .observe(this, new Observer<List<Article>>() {
+                    @Override
+                    public void onChanged(List<Article> data) {
+                        if (data.size() != 0) {
+                            if (page == 0) {
+                                int size = articles.size();
+                                // reset the adapter if this is a new query and the current dataset is not empty
+                                if (size != 0) {
+                                    articles.clear();
+                                    adapter.notifyItemRangeRemoved(0, size);
+                                }
+                            }
+                            int size = articles.size();
+                            articles.addAll(data);
+                            adapter.notifyItemRangeInserted(size, data.size());
+                            // keep fetching on if current batch contains 10 articles
+                            if (data.size() == 10) {
+                                page++;
+                                Log.d(TAG, "fetchPage, page: " + page);
+                                if (page % 3 != 0) {
+                                    // each NYTimes API call returns 10 articles, and the device screen fits
+                                    // 3 times as many articles
+                                    fetchPage();
+                                }
+                            }
                         }
                     }
-                    int size = articles.size();
-                    articles.addAll(data);
-                    adapter.notifyItemRangeInserted(size, data.size());
-                    // keep fetching on if current batch contains 10 articles
-                    if (data.size() == 10) {
-                        page++;
-                        Log.d(TAG, "fetchPage, page: " + page);
-                        if (page % 3 != 0) {
-                            // each NYTimes API call returns 10 articles, and the device screen fits
-                            // 3 times as many articles
-                            fetchPage();
-                        }
-                    }
-                }
-            }
-        });
+                });
     }
 
     private void hideKeyboard() {

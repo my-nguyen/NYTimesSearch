@@ -26,7 +26,6 @@ class ArticleRepository {
         this.articleAPI = articleAPI;
     }
 
-    // String beginDate, String filterQuery, Integer page, String query, String sort, String apiKey
     public LiveData<List<Article>> fetchPage(String query, Integer page, String beginDate, String filterQuery, String sort, String apiKey) {
         Log.d(TAG, "fetchPage: query: " + query + ", page: " + page + ", beginDate: " + beginDate + ", filterQuery: " + filterQuery + ", sort: " + sort);
         final MutableLiveData<List<Article>> data = new MutableLiveData<>();

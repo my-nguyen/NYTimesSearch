@@ -102,7 +102,8 @@ public class SettingsFragment extends DialogFragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.sortOrderSpinner.setAdapter(adapter);
         Log.i(TAG, "at spinner, settings: " + settings);
-        binding.sortOrderSpinner.setSelection(adapter.getPosition(settings.sortOrder));
+        int position = adapter.getPosition(settings.sortOrder);
+        binding.sortOrderSpinner.setSelection(position);
         binding.sortOrderSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
